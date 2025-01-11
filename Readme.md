@@ -21,8 +21,8 @@
 <h3> Installation Steps:</h3>
 <br>
 <p>1. Clone the repository:</p>
-<pre><code>git clone https://github.com/yourusername/LetterShare.git
-cd LetterShare
+<pre><code>git clone https://github.com/Noel9907/Wisdom
+cd Wisdom
 </code></pre>
 <br>
 <p>2. Install dependencies:</p>
@@ -37,12 +37,14 @@ cd LetterShare
 DATABASE_URL=your-database-url
 </code></pre>
 <br>
-<p>4. Start the development server:</p>
+<p>4. Start the development server and frondend:</p>
 
 <pre><code>npm start
 </code></pre>
+<pre><code>npm run dev
+</code></pre>
 <br>
-<p>5. Open your browser and navigate to <a href="http://localhost:3000">http://localhost:3000</a>.</p>
+<p>5. Open your browser and navigate to <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 
 <h2>🛠️ How It Works:</h2>
 
