@@ -1,6 +1,6 @@
 <h1 align="center" id="title">Wisdom ✉️</h1>
 
-<p id="description">A platform where people can write heartfelt letters and share them anonymously with the world. Discover random letters from others and connect through the power of words.</p>Check it out<a href="https://inferis.me/">Wisdom</a>
+<p id="description">A platform where people can write heartfelt letters and share them anonymously with the world. Discover random letters from others and connect through the power of words.</p>Check it out<a href="https://inferis.me/"> Wisdom</a>
 
 <h3> Features:</h3>
 
