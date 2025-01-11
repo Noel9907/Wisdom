@@ -207,6 +207,7 @@ export default function OldLetterMessages() {
   const [author, setAuthor] = useState("");
   const { getletter, loading, posts } = useGetLetter();
   const { createletter, Loading: postLoading } = usePostLetter();
+
   useEffect(() => {
     getletter();
   }, [getletter]);
@@ -235,26 +236,22 @@ export default function OldLetterMessages() {
   };
 
   return (
-    <div
-      className="h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center bg-fixed flex flex-col items-center justify-center p-4 font-serif overflow-hidden"
-
-      // className="min-h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center flex flex-col items-center justify-center p-4 font-serif"
-    >
-      <div className="w-full max-w-5xl bg-[#f2e8c4] bg-opacity-90 p-8 rounded-lg shadow-2xl border-4 border-[#d4c08d] overflow-hidden">
-        <header className="text-center mb-8 border-b-2 border-[#8b4513] pb-4">
-          <h1 className="text-4xl font-bold mb-2 text-[#8b4513]">
+    <div className="min-h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center bg-fixed flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 font-serif overflow-hidden">
+      <div className="w-full max-w-4xl bg-[#f2e8c4] bg-opacity-90 p-6 sm:p-8 rounded-lg shadow-2xl border-4 border-[#d4c08d]">
+        <header className="text-center mb-6 sm:mb-8 border-b-2 border-[#8b4513] pb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-[#8b4513]">
             Philosophical Letters
           </h1>
-          <p className="text-xl text-[#8b4513] italic">
+          <p className="text-lg sm:text-xl text-[#8b4513] italic">
             Wisdom Across the Ages
           </p>
         </header>
 
-        <main className="flex flex-col md:flex-row gap-8">
+        <main className="flex flex-col md:flex-row gap-6 sm:gap-8">
           <div className="flex-grow">
             <div className="relative">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold text-[#8b4513]">
+                <h2 className="text-xl sm:text-2xl font-semibold text-[#8b4513]">
                   Letter of Wisdom
                 </h2>
                 <button
@@ -275,29 +272,26 @@ export default function OldLetterMessages() {
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
-                  className="text-center bg-[#f8f3e3] p-8 rounded-lg shadow-inner min-h-[300px] flex flex-col justify-center"
+                  className="text-center bg-[#f8f3e3] p-6 sm:p-8 rounded-lg shadow-inner min-h-[200px] sm:min-h-[300px] flex flex-col justify-center"
                 >
-                  <>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-3xl mb-6 leading-relaxed text-[#5e2f0d] whitespace-pre-line italic"
-                      // style={{ fontFamily: "'Brush Script MT', cursive" }}
-                    >
-                      &quot;{posts.letter}&quot;
-                    </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                      className="text-xl text-[#8b4513]"
-                    >
-                      - {posts.name}
-                    </motion.p>
-                  </>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-lg sm:text-2xl mb-4 sm:mb-6 leading-relaxed text-[#5e2f0d] whitespace-pre-line italic"
+                  >
+                    &quot;{posts.letter}&quot;
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="text-base sm:text-lg text-[#8b4513]"
+                  >
+                    - {posts.name}
+                  </motion.p>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -306,9 +300,9 @@ export default function OldLetterMessages() {
           <div className="md:w-1/3">
             <form
               onSubmit={handleSubmit}
-              className="space-y-4 bg-[#f8f3e3] p-4 rounded-lg shadow-inner"
+              className="space-y-4 bg-[#f8f3e3] p-4 sm:p-6 rounded-lg shadow-inner"
             >
-              <h2 className="text-xl font-semibold mb-2 text-[#8b4513]">
+              <h2 className="text-lg sm:text-xl font-semibold text-[#8b4513]">
                 Pen Your Thoughts
               </h2>
               <div>
@@ -346,20 +340,14 @@ export default function OldLetterMessages() {
               <div>
                 <button
                   type="submit"
-                  className="form-button w-full bg-[#8b4513] text-[#f2e8c4] hover:bg-[#5e2f0d] focus:ring-[#d4c08d] py-2 px-4 rounded-md flex items-center justify-center"
-                  disabled={postLoading}
+                  className="w-full bg-[#8b4513] text-[#f2e8c4] hover:bg-[#5e2f0d] focus:ring-[#d4c08d] py-2 rounded-md font-semibold"
                 >
-                  <Feather className="inline-block mr-2 h-4 w-4" />
-                  {postLoading ? "Sending..." : "Seal Your Letter"}
+                  Send Wisdom
                 </button>
               </div>
             </form>
           </div>
         </main>
-
-        <footer className="mt-8 text-center text-[#8b4513] border-t-2 border-[#8b4513] pt-4">
-          <p>&quot;{randomQuote}&quot; </p>
-        </footer>
       </div>
     </div>
   );
