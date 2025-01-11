@@ -41,7 +41,7 @@ DATABASE_URL=your-database-url
 
 <pre><code>npm start
 </code></pre>
-<pre><code>npm run dev
+<pre><code>npm run dev //from frontend folder
 </code></pre>
 <br>
 <p>5. Open your browser and navigate to <a href="http://localhost:8000">http://localhost:8000</a>.</p>
