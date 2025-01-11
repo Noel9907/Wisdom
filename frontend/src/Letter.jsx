@@ -303,7 +303,7 @@ export default function OldLetterMessages() {
               className="space-y-4 bg-[#f8f3e3] p-4 sm:p-6 rounded-lg shadow-inner"
             >
               <h2 className="text-lg sm:text-xl font-semibold text-[#8b4513]">
-                Pen Your Thoughts
+                Share your wisdom
               </h2>
               <div>
                 <label
