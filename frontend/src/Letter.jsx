@@ -3,16 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Feather } from "lucide-react";
 import usePostLetter from "./hooks/usePostletters";
 import useGetLetter from "./hooks/useGetletters";
-
-const initialLetters = [
-  {
-    id: 1,
-    content: "The unexamined life is not worth living.",
-    author: "Socrates",
-  },
-  { id: 2, content: "I think, therefore I am.", author: "René Descartes" },
-  { id: 3, content: "To be is to be perceived.", author: "George Berkeley" },
-];
+import toast from "react-hot-toast";
+import "./f.css";
 const footer = [
   {
     quout: "To be is to be perceived.",
@@ -208,30 +200,24 @@ const footer = [
       "To live is the rarest thing in the world. Most people exist, that is all.",
   },
 ];
+
 const randomQuote = footer[Math.floor(Math.random() * footer.length)].quout;
 
 export default function OldLetterMessages() {
-  const [letters, setLetters] = useState(initialLetters);
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [newLetter, setNewLetter] = useState("");
   const [author, setAuthor] = useState("");
   const { getletter, loading, posts } = useGetLetter();
-
-  // console.log(posts);
-  const { createletter } = usePostLetter();
-  const handlePrevLetter = () => {
-    setCurrentLetterIndex((prev) => (prev > 0 ? prev - 1 : letters.length - 1));
+  const { createletter, Loading: postLoading } = usePostLetter();
+  useEffect(() => {
     getletter();
-    console.log(posts);
-  };
+  }, [getletter]);
 
   const handleNextLetter = () => {
-    setCurrentLetterIndex((prev) => (prev < letters.length - 1 ? prev + 1 : 0));
+    getletter();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getletter();
 
     if (newLetter.trim() && author.trim()) {
       const trimmedNewLetter = newLetter.trim();
@@ -241,18 +227,20 @@ export default function OldLetterMessages() {
         letter: trimmedNewLetter,
       };
       createletter(result);
-      setLetters([
-        ...letters,
-        { id: letters.length + 1, content: newLetter, author },
-      ]);
-
-      setNewLetter("");
-      setAuthor("");
+      if (!postLoading) {
+        toast.success("Letter sent successfully!");
+        setNewLetter("");
+        setAuthor("");
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center flex flex-col items-center justify-center p-4 font-serif">
+    <div
+      className="h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center bg-fixed flex flex-col items-center justify-center p-4 font-serif overflow-hidden"
+
+      // className="min-h-screen bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center flex flex-col items-center justify-center p-4 font-serif"
+    >
       <div className="w-full max-w-5xl bg-[#f2e8c4] bg-opacity-90 p-8 rounded-lg shadow-2xl border-4 border-[#d4c08d] overflow-hidden">
         <header className="text-center mb-8 border-b-2 border-[#8b4513] pb-4">
           <h1 className="text-4xl font-bold mb-2 text-[#8b4513]">
@@ -267,13 +255,6 @@ export default function OldLetterMessages() {
           <div className="flex-grow">
             <div className="relative">
               <div className="flex justify-between items-center mb-4">
-                <button
-                  onClick={handlePrevLetter}
-                  aria-label="Previous letter"
-                  className="text-[#8b4513] hover:text-[#5e2f0d] hover:bg-[#e6d5a7] p-2 rounded-full"
-                >
-                  <ChevronLeft className="h-6 w-6" />
-                </button>
                 <h2 className="text-2xl font-semibold text-[#8b4513]">
                   Letter of Wisdom
                 </h2>
@@ -287,22 +268,37 @@ export default function OldLetterMessages() {
               </div>
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={currentLetterIndex}
-                  initial={{ opacity: 0, y: 20 }}
+                  key={posts.letter}
+                  initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeInOut",
+                  }}
                   className="text-center bg-[#f8f3e3] p-8 rounded-lg shadow-inner min-h-[300px] flex flex-col justify-center"
                 >
-                  <p
-                    className="text-3xl mb-6 leading-relaxed text-[#5e2f0d] whitespace-pre-line"
-                    style={{ fontFamily: "'Brush Script MT', cursive" }}
-                  >
-                    &quot;{letters[currentLetterIndex].content}&quot;
-                  </p>
-                  <p className="text-xl text-[#8b4513]">
-                    - {letters[currentLetterIndex].author}
-                  </p>
+                  <>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-3xl mb-6 leading-relaxed text-[#5e2f0d] whitespace-pre-line italic"
+                      // style={{ fontFamily: "'Brush Script MT', cursive" }}
+                    >
+                      &quot;{posts.letter}&quot;
+                    </motion.p>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      className="text-xl text-[#8b4513]"
+                    >
+                      - {posts.name}
+                    </motion.p>
+                  </>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -328,7 +324,7 @@ export default function OldLetterMessages() {
                   value={newLetter}
                   onChange={(e) => setNewLetter(e.target.value)}
                   placeholder="What wisdom would you like to share?"
-                  className="w-full bg-[#f2e8c4] text-[#5e2f0d] placeholder-[#8b4513] border-[#d4c08d] focus:border-[#8b4513] focus:ring-[#8b4513] rounded-md p-2 resize-none"
+                  className="w-full bg-[#f2e8c4] text-[#5e2f0d] placeholder-[#8b4513] border-[#d4c08d] focus:border-[#8b4513] focus:ring-[#8b4513] rounded-md p-2 resize-y min-h-[80px] no-scrollbar"
                   rows={3}
                 />
               </div>
@@ -348,13 +344,16 @@ export default function OldLetterMessages() {
                   className="w-full bg-[#f2e8c4] text-[#5e2f0d] placeholder-[#8b4513] border-[#d4c08d] focus:border-[#8b4513] focus:ring-[#8b4513] rounded-md p-2"
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full bg-[#8b4513] text-[#f2e8c4] hover:bg-[#5e2f0d] focus:ring-[#d4c08d] py-2 px-4 rounded-md flex items-center justify-center"
-              >
-                <Feather className="mr-2 h-4 w-4" />
-                Seal Your Letter
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  className="form-button w-full bg-[#8b4513] text-[#f2e8c4] hover:bg-[#5e2f0d] focus:ring-[#d4c08d] py-2 px-4 rounded-md flex items-center justify-center"
+                  disabled={postLoading}
+                >
+                  <Feather className="inline-block mr-2 h-4 w-4" />
+                  {postLoading ? "Sending..." : "Seal Your Letter"}
+                </button>
+              </div>
             </form>
           </div>
         </main>

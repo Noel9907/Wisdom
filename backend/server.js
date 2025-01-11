@@ -19,6 +19,6 @@ app.use(
 app.get("/letter/get", getLetter);
 app.post("/letter/post", postLetter);
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`app listening on port ${port}`);
   connectToMongoDB();
 });

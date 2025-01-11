@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useState, useCallback } from "react";
 
 const useGetLetter = () => {
@@ -22,19 +22,13 @@ const useGetLetter = () => {
       if (data.error) {
         throw new Error(data.error); // Handle custom error from API
       }
-
-      // Ensure the response contains data and set it, fallback to empty array
-      //   if (data.data && Array.isArray(data.data)) {
-      //     setPosts(data.data);
-      //   } else {
-      //     toast.error("Unexpected response format.");
-      //   }
     } catch (error) {
       toast.error(error.message || "Something went wrong!");
     } finally {
       setLoading(false);
     }
   }, []);
+
   return { getletter, posts, loading };
 };
 

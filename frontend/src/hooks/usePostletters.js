@@ -1,5 +1,5 @@
 import React from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useState } from "react";
 
 const usePostLetter = () => {
@@ -18,7 +18,7 @@ const usePostLetter = () => {
         body: JSON.stringify({ name, letter }),
       });
     } catch (error) {
-      toast(error.message);
+      toast.error(error.message || "Something went wrong!");
     } finally {
       setLoading(false);
     }
