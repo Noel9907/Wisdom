@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight, Feather } from "lucide-react";
 import usePostLetter from "./hooks/usePostletters";
 import useGetLetter from "./hooks/useGetletters";
 import toast from "react-hot-toast";
-import "./f.css";
 const footer = [
   {
     quout: "To be is to be perceived.",
