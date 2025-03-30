@@ -60,8 +60,8 @@ DATABASE_URL=your-database-url
 
 <ol>
   <li>Fork the repository and clone it locally:</li>
-  <pre><code>git clone https://github.com/yourusername/LetterShare.git
-cd LetterShare
+  <pre><code>git clone git clone https://github.com/Noel9907/Wisdom
+cd Wisdom
 </code></pre>
 
   <li>Create a new branch for your changes:</li>
